@@ -71,32 +71,31 @@ app.get("/api/movie-reviews", (req, res) => {
 });
 
 app.put("/api/review/:id", (req, res) => {
-  let selectedMovie = id;
+  let selectedMovie = req.params.id; 
   const { updatedReview } = req.body;
   db.query(
-    `UPDATE reviews SET review = ${updatedReview} WHERE movie_id = ${selectedMovie}`,
+    `UPDATE reviews SET review = "${updatedReview}" WHERE reviews.movie_id = ${selectedMovie}`,
     function (err, results) {
       if (err) {
         console.log(err);
       } else {
-        console.log(results);
+        console.log(db.query('SELECT * FROM reviews'))
         res.send(results);
       }
-    }
-  );
+    });
 });
 
 app.get("/api/movie-reviews", (req, res) => {
   db.query(`SELECT movies.id AS ID, movies.movie_name AS Name, reviews.review
   FROM movies INNER JOIN reviews
-  ON reviews.movie_id = movies.id`),
+  ON reviews.movie_id = movies.id`,
     function (err, results) {
       if (err) {
         console.log(err);
       }
       console.log(results);
       res.send(results);
-    };
+    });
 });
 
 // Default response for any other request (Not Found)
