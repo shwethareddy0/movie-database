@@ -27,6 +27,7 @@ app.post('/api/add-movie', (req, res) => {
   const {title} = req.body;
   db.query(`INSERT INTO movies(movie_name) VALUES (${title})`, function (err, results) {
     console.log(results);
+    res.send(results);
   })
 });
 
@@ -34,23 +35,27 @@ app.post('/api/add-movie', (req, res) => {
 app.get('/api/movies', (req, res) => {
   db.query('SELECT * FROM movies', function (err, results) {
     console.log(results);
+    res.send(results);
   });
+
 });
 
 // Deletes a row based on a specified id
 app.delete('/api/movie/:id', (req, res) => {
   let deletedRow = id;
-  db.query(`DELETE FROM movies WHERE id = ?`, deletedRow, (err, result) => {
+  db.query(`DELETE FROM movies WHERE id = ?`, deletedRow, (err, results) => {
     if (err) {
       console.log(err);
     }
-    console.log(result);
+    console.log(results);
+    res.send(results);
   });
 });
 
 app.get('/api/movies', (req, res) => {
   db.query(`SELECT * FROM movies`, function (err, results) {
     console.log(results);
+    res.send(results);
   });
 });
 
@@ -62,6 +67,7 @@ app.get('api/movie-reviews', (req, res) => {
       console.log(err);
     }
     console.log(results);
+    res.send(results);
   };
 });
 
@@ -74,6 +80,7 @@ app.put('api/review/:id', (req , res) => {
     }
     else {
       console.log(results)
+      res.send(results);
     }
   })
 })
@@ -86,6 +93,7 @@ app.get('api/movie-reviews', (req, res) => {
       console.log(err);
     }
     console.log(results);
+    res.send(results);
   };
 });
 
